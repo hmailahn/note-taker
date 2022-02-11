@@ -1,7 +1,10 @@
 const router = require('express').Router();
 const { notes } = require('../../data/notes');
 const createNewNote = require('../../lib/notes');
-var uniqid = require('uniqid');
+const { 
+    v1: uuidv1, //time based
+    v4: uuidv4, // random
+  } = require('uuid');
 const fs = require('fs');
 const path = require('path');
 
@@ -16,19 +19,24 @@ router.get('/notes', (req, res) => {
 router.post('/notes', (req, res) => {
     // will need to change this
     //setting id based on the next index of the array
-req.body.id = notes.length.toString(); /// will need to change this
+req.body.id = uuidv4(); /// will need to change this
 
 //add note to json file and animals array in this function
 const note = createNewNote(req.body, notes);
 res.json(note);
 
     // req.body.id = uniqid();
-    // const note = createNewNote(req.body, notes);
     // res.json(note);
 
-
-
 });
+
+router.delete('/api/notes/:id', (req, res) => {
+    const { id } = req.params;
+    
+    const notesIndex = notes.findIndex(p => p.id == id);
+    notes.splice(notesIndex, 1);
+    res.send()
+  })
 
 // function createNewNote(body, notesArray) {
 //     const note = body;
