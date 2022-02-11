@@ -7,12 +7,12 @@ const path = require('path');
 //works? needs to be tested when notes are added
 router.get('/notes', (req, res) => {
     let results = notes;
-    res.send('hello');
+    res.send('lets go');
 });
 
 
-//this doesn;t work////
-router.post('/api/notes', (req, res) => {
+//works
+router.post('/notes', (req, res) => {
 console.log(req.body);
 res.json(req.body);
 
