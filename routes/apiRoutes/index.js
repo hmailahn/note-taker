@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { notes } = require('../../data/notes.json');
+const { notes } = require('../../data/notes');
+const createNewNote = require('../../lib/notes');
 var uniqid = require('uniqid');
 const fs = require('fs');
 const path = require('path');
@@ -7,19 +8,26 @@ const path = require('path');
 //works? needs to be tested when notes are added
 router.get('/notes', (req, res) => {
     let results = notes;
-    res.send('lets go');
+    res.json(results);
 });
 
 
 //works
 router.post('/notes', (req, res) => {
-console.log(req.body);
-res.json(req.body);
+    // will need to change this
+    //setting id based on the next index of the array
+req.body.id = notes.length.toString(); /// will need to change this
 
+//add note to json file and animals array in this function
+const note = createNewNote(req.body, notes);
+res.json(note);
 
     // req.body.id = uniqid();
     // const note = createNewNote(req.body, notes);
     // res.json(note);
+
+
+
 });
 
 // function createNewNote(body, notesArray) {
