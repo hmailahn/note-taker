@@ -22,5 +22,4 @@ res.json(note);
 });
 
 
-
 module.exports = router;
